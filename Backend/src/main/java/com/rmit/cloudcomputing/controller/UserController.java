@@ -1,7 +1,6 @@
 package com.rmit.cloudcomputing.controller;
 
 import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProvider;
-import com.amazonaws.services.cognitoidp.model.AdminUserGlobalSignOutRequest;
 import com.amazonaws.services.cognitoidp.model.SignUpRequest;
 import com.amazonaws.services.cognitoidp.model.UsernameExistsException;
 import com.rmit.cloudcomputing.dto.request.RegisterRequest;
