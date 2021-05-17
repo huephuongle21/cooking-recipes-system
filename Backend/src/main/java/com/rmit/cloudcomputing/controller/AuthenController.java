@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/authen")
 public class AuthenController {
     @Value("${cognito.user.pool.id}")
@@ -80,7 +81,7 @@ public class AuthenController {
         } catch(Exception e) {
             e.printStackTrace();
             response.setError(true);
-            response.setMessage("Old password not match");
+            response.setMessage(e.toString());
         }
         return response;
     }
