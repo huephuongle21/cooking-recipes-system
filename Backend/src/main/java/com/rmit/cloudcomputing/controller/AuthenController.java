@@ -78,10 +78,14 @@ public class AuthenController {
                 .withProposedPassword(change.getNewPassword());
         try {
             provider.changePassword(request);
-        } catch(Exception e) {
+        } catch(NotAuthorizedException e) {
             e.printStackTrace();
             response.setError(true);
-            response.setMessage(e.toString());
+            response.setMessage("Incorrect old password");
+        } catch(LimitExceededException e) {
+            e.printStackTrace();
+            response.setError(true);
+            response.setMessage("Exceeds the limit for changing password");
         }
         return response;
     }
