@@ -1,9 +1,5 @@
 package com.rmit.cloudcomputing.service;
 
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.document.*;
 import com.amazonaws.services.dynamodbv2.document.spec.GetItemSpec;
 import com.rmit.cloudcomputing.dto.request.AddRecipeRequest;
@@ -25,10 +21,10 @@ public class RecipeService {
     private DynamoDB dynamoDB;
 
     @Autowired
-    private AmazonDynamoDB amazonDynamoDB;
+    private RecipesUtility recipesUtility;
 
     @Autowired
-    private RecipesUtility recipesUtility;
+    private BucketService bucketService;
 
     public Response addRecipe(AddRecipeRequest recipe) {
         Table table = dynamoDB.getTable("recipe");
@@ -46,11 +42,12 @@ public class RecipeService {
                 .withString("description", recipe.getDescription());
         try {
             table.putItem(newRecipe);
-
-            // Upload image to s3 bucket
-
+            if(bucketService.uploadImage(recipe.getFile(), id)) {
+                response.setMessage("Recipe added with image");
+            } else {
+                response.setMessage("Recipe added without image");
+            }
             response.setError(false);
-            response.setMessage("Recipe added");
         } catch (Exception e) {
             response.setError(true);
             response.setMessage("Cannot add recipe");
@@ -66,31 +63,12 @@ public class RecipeService {
         return recipesUtility.getUserRecipes(title, dynamoDB, "title", true);
     }
 
-    public UserRecipesResponse getAllRecipes() {
-        UserRecipesResponse response = new UserRecipesResponse(true, "No recipes found");
-        DynamoDBMapperConfig mapperConfig = new DynamoDBMapperConfig.Builder()
-                .withTableNameOverride(DynamoDBMapperConfig.TableNameOverride
-                        .withTableNameReplacement("recipe")).build();
-
-        DynamoDBMapper mapper = new DynamoDBMapper(amazonDynamoDB, mapperConfig);
-        DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
-
-        List<RecipeResponse> scanResult = mapper.scan(RecipeResponse.class, scanExpression);
-
-        if(scanResult.size() != 0) {
-            response.setError(false);
-            response.setMessage("Recipes found");
-            response.setResponses(scanResult);
-        }
-        return response;
-    }
-
     public RecipeResponse getRecipeById(String id) {
         Table table = dynamoDB.getTable("recipe");
         GetItemSpec spec = new GetItemSpec().withPrimaryKey("id", id);
         Item recipe = table.getItem(spec);
         return new RecipeResponse(id, recipe.getString("title"),
-                recipe.getString("recipe"), recipe.getString("description"),
-                recipe.getString("userEmail"));
+                recipe.getString("date"), recipe.getString("description"),
+                recipe.getString("userEmail"), bucketService.downloadImage(id));
     }
 }

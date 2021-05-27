@@ -11,24 +11,27 @@ public class RecipeResponse {
     private String date;
     private String description;
     private String userEmail;
+    private String image;
 
     public RecipeResponse() {
 
     }
 
-    public RecipeResponse(String id, String title, String date, String desc) {
+    public RecipeResponse(String id, String title, String date, String desc, String image) {
         this.id = id;
         this.title = title;
         this.date = date;
         this.description = desc;
+        this.image = image;
     }
 
-    public RecipeResponse(String id, String title, String date, String desc, String email) {
+    public RecipeResponse(String id, String title, String date, String desc, String email, String image) {
         this.id = id;
         this.title = title;
         this.date = date;
         this.description = desc;
         this.userEmail = email;
+        this.image = image;
     }
 
     @DynamoDBHashKey(attributeName = "id")
@@ -39,6 +42,10 @@ public class RecipeResponse {
     @DynamoDBAttribute(attributeName = "date")
     public String getDate() {
         return date;
+    }
+
+    public String getImage() {
+        return image;
     }
 
     @DynamoDBAttribute(attributeName = "description")
@@ -74,5 +81,9 @@ public class RecipeResponse {
     @DynamoDBAttribute(attributeName = "userEmail")
     public String getUserEmail() {
         return userEmail;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

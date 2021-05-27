@@ -7,8 +7,6 @@ import com.rmit.cloudcomputing.service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/recipe")
@@ -17,8 +15,8 @@ public class RecipeController {
     @Autowired
     private RecipeService recipeService;
 
-    @PostMapping("/addRecipe")
-    public Response addRecipe(@Valid @RequestBody AddRecipeRequest recipe) {
+    @RequestMapping(value = "/addRecipe", method = RequestMethod.POST)
+    public Response addRecipe(@ModelAttribute AddRecipeRequest recipe) {
         return recipeService.addRecipe(recipe);
     }
 
@@ -30,11 +28,6 @@ public class RecipeController {
     @GetMapping("/queryRecipe/{title}")
     public UserRecipesResponse getRecipesByTitle(@PathVariable("title") String title) {
         return recipeService.queryRecipes(title);
-    }
-
-    @GetMapping("/allRecipes")
-    public UserRecipesResponse getAllRecipes() {
-        return recipeService.getAllRecipes();
     }
 
 }

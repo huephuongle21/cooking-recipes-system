@@ -5,6 +5,8 @@ import com.amazonaws.services.dynamodbv2.document.spec.ScanSpec;
 import com.amazonaws.services.dynamodbv2.model.ResourceNotFoundException;
 import com.rmit.cloudcomputing.dto.response.RecipeResponse;
 import com.rmit.cloudcomputing.dto.response.UserRecipesResponse;
+import com.rmit.cloudcomputing.service.BucketService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -14,6 +16,10 @@ import java.util.List;
 
 @Component
 public class RecipesUtility {
+
+    @Autowired
+    private BucketService bucketService;
+
     public UserRecipesResponse getUserRecipes(String value, DynamoDB dynamoDB,
                                               String name, boolean getEmail) {
         Table table = dynamoDB.getTable("recipe");
@@ -35,18 +41,15 @@ public class RecipesUtility {
             while (iter.hasNext()) {
                 Item item = iter.next();
 
-                // Retrieve image from s3 bucket
-
-                RecipeResponse recipe = new RecipeResponse(item.getString("id"),
+                String id = item.getString("id");
+                RecipeResponse recipe = new RecipeResponse(id,
                         item.getString("title"), item.getString("date"),
-                        item.getString("description"));
+                        item.getString("description"), bucketService.downloadImage(id));
 
                 if(getEmail) {
                     recipe.setUserEmail(item.getString("userEmail"));
                 }
-
                 recipes.add(recipe);
-
             }
 
             if(recipes.size() != 0) {

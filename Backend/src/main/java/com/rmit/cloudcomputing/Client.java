@@ -75,5 +75,4 @@ public class Client {
         MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter(mapper);
         return converter;
     }
-
 }

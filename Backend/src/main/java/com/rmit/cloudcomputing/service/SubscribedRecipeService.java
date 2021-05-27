@@ -23,8 +23,6 @@ public class SubscribedRecipeService {
 
     public Response subscribeRecipe(SubscribedRecipeRequest request) {
 
-        // Send to user email
-
         Table table = dynamoDB.getTable("subscribed_recipe");
         Response response = new Response();
         String id = UUID.randomUUID().toString();
@@ -63,9 +61,6 @@ public class SubscribedRecipeService {
             List<RecipeResponse> recipes = new ArrayList<>();
             Iterator<Item> iter = items.iterator();
             while(iter.hasNext()) {
-
-                // Retrieve image from s3 bucket
-
                 Item item = iter.next();
                 String id = item.getString("recipeId");
                 RecipeResponse recipe = recipeService.getRecipeById(id);
