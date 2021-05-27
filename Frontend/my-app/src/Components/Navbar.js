@@ -3,8 +3,8 @@ import { withRouter } from "react-router-dom";
 import AuthenHandler from '../Handlers/AuthenHandler';
 
 class Navbar extends Component {
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
         this.logout = this.logout.bind(this);
     }
 

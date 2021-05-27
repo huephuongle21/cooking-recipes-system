@@ -5,8 +5,8 @@ import Navbar from './Navbar';
 import SubscribedRecipesHandler from '../Handlers/SubscribedRecipesHandler';
 
 class SubscribedRecipes extends Component {
-    constructor(props) {
-        super(props)
+    constructor() {
+        super()
         this.state = {
             recipes: [],
             errorMessage: ""
@@ -50,14 +50,14 @@ class SubscribedRecipes extends Component {
                                 this.state.errorMessage &&
                                 <h6 className="alert alert-danger"> {this.state.errorMessage} </h6> 
                             }
-                            <table className="table" striped bordered hover size="sm" width="100%">
+                            <table className="table" width="100%">
                                 <thead>
                                     <tr width="100%">
                                         <th className="th">Title</th>
                                         <th className="th">Date</th>
                                         <th className="th">Description</th>
                                         <th className="th">User email</th>
-                                        {/* <th className="th">Artist Image</th> */}
+                                        <th className="th">Recipe Image</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -68,7 +68,7 @@ class SubscribedRecipes extends Component {
                                             <td> {recipe.date}</td>
                                             <td> {recipe.description}</td>
                                             <td> {recipe.userEmail}</td>
-                                            {/* <td><img src={music.object} alt=""/></td> */}
+                                            <td><img src={recipe.image} alt=""/></td>
                                         </tr>
                                     )
                                 }

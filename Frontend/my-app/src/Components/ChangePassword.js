@@ -30,7 +30,6 @@ class ChangePassword extends Component {
 
         AuthenHandler.changePwdHandler(changePwdRequest).then((res) => {
             const data = res.data;
-            console.log(data);
             if(data.error) {
                 this.setState({
                     oldPassword: "",

@@ -4,9 +4,9 @@ import Navbar from './Navbar';
 import UserHandler from '../Handlers/UserHandler';
 import RecipeHandler from '../Handlers/RecipeHandler';
 
-class Subscription extends Component {
-    constructor(props) {
-        super(props)
+class UserPage extends Component {
+    constructor() {
+        super()
         this.state = {
             userEmail: "",
             username: "",
@@ -67,13 +67,13 @@ class Subscription extends Component {
                     <div className="container">
                         {
                             this.state.errorMessage ? <h6 className="alert alert-danger"> {this.state.errorMessage} </h6> :
-                            <table className="table" striped bordered hover size="sm" width="100%">
+                            <table className="table" width="100%">
                                 <thead>
                                     <tr width="100%">
                                         <th className="th">Title</th>
                                         <th className="th">Date</th>
                                         <th className="th">Description</th>
-                                        {/* <th className="th">Artist Image</th> */}
+                                        <th className="th">Recipe Image</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -83,7 +83,7 @@ class Subscription extends Component {
                                             <td> {recipe.title}</td>
                                             <td> {recipe.date}</td>
                                             <td> {recipe.description}</td>
-                                            {/* <td><img src={music.object} alt=""/></td> */}
+                                            <td><img src={recipe.image} alt=""/></td>
                                         </tr>
                                     )
                                 }
@@ -97,4 +97,4 @@ class Subscription extends Component {
         }
     }
 }
-export default Subscription;
+export default UserPage;

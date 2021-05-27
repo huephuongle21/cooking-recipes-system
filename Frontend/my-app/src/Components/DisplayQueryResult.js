@@ -39,14 +39,14 @@ class DisplayQueryResult extends Component {
                 return(
                     <React.Fragment>
                         <div className="container">
-                            <table className="table" striped bordered hover size="sm" width="100%">
+                            <table className="table" width="100%">
                                 <thead>
                                     <tr width="100%">
                                         <th className="th">Title</th>
                                         <th className="th">Date</th>
                                         <th className="th">Description</th>
                                         <th className="th">User email</th>
-                                        {/* <th className="th">Artist Image</th> */}
+                                        <th className="th">Recipe Image</th>
                                         <th> Actions</th>
                                     </tr>
                                 </thead>
@@ -58,7 +58,7 @@ class DisplayQueryResult extends Component {
                                             <td> {result.date}</td>
                                             <td> {result.description}</td>
                                             <td> {result.userEmail}</td>
-                                            {/* <td><img src={result.object} alt=""/></td> */}
+                                            <td><img src={result.image} alt=""/></td>
                                             <td>
                                                 <button style={{marginLeft: "10px"}} 
                                                     onClick={() => this.subscribeRecipe(result.id)} 

@@ -9,29 +9,40 @@ class CreateRecipe extends Component {
         this.state = {
             title: "",
             description: "",
+            file: "",
             errorMessage: ""
         };
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.onFileChange = this.onFileChange.bind(this);
     }
 
     onChange(e) {
         this.setState({[e.target.name]: e.target.value});
     }
 
+    onFileChange(e) {
+        var data = new FormData();
+        data.append("file", e.target.files[0])
+        this.setState({
+            file: data
+        })
+    }
+
     onSubmit(e) {
         e.preventDefault();
-        const newRecipe = {
-            title: this.state.title,
-            description: this.state.description,
-            email: localStorage.getItem("user_email")
-        }
-        RecipeHandler.addRecipe(newRecipe).then((res) => {
+        const recipe = this.state.file;
+        recipe.append("title", this.state.title);
+        recipe.append("description", this.state.description);
+        recipe.append("email", localStorage.getItem("user_email"));
+
+        RecipeHandler.addRecipe(recipe).then((res) => {
             const data = res.data;
             if(data.error) {
                 this.setState({
                     title: "",
                     description: "",
+                    file: "",
                     errorMessage: data.message
                 });
             } else {
@@ -47,7 +58,7 @@ class CreateRecipe extends Component {
                 <Navbar/>
                 <div className="container">
                     <h1>Create new recipe</h1>
-                    <Form onSubmit={this.onSubmit}> 
+                    <Form onSubmit={this.onSubmit} enctype='multipart/form-data'> 
                         <div className="form-group">
                             <label className="name">Title</label>
                             <input className="input" type="text" placeholder="Title" name="title" 
@@ -58,6 +69,11 @@ class CreateRecipe extends Component {
                             <label className="name">Description</label>
                             <input className="input" type="text" placeholder="Description" name="description" 
                                 value={this.state.description} onChange={this.onChange} required/>
+                        </div>
+
+                        <div className="form-group">
+                            <label className="name">Recipe image</label>
+                            <input className="input" type="file" onChange={this.onFileChange} name="file" accept="image/jpeg" required/>
                         </div>
                         { 
                             this.state.errorMessage &&
