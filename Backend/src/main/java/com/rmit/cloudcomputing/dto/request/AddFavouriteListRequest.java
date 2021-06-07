@@ -1,10 +1,10 @@
 package com.rmit.cloudcomputing.dto.request;
 
-public class SubscribedRecipeRequest {
+public class AddFavouriteListRequest {
     private String email;
     private String recipeId;
 
-    public SubscribedRecipeRequest() {
+    public AddFavouriteListRequest() {
 
     }
 

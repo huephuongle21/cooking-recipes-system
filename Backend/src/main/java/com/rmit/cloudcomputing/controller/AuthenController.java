@@ -47,7 +47,6 @@ public class AuthenController {
             response.setMessage("Login successfully");
             response.setUserEmail(email);
         } catch(Exception e) {
-            e.printStackTrace();
             response.setError(true);
             response.setMessage("Email or password is incorrect");
         }
@@ -69,7 +68,7 @@ public class AuthenController {
         return response;
     }
 
-    @PostMapping("/changePassword")
+    @PutMapping("/change-password")
     public Response changePassword(@Valid @RequestBody ChangePwdRequest change) {
         Response response = new Response(false, "Change password successfully");
         ChangePasswordRequest request = new ChangePasswordRequest()
@@ -79,11 +78,9 @@ public class AuthenController {
         try {
             provider.changePassword(request);
         } catch(NotAuthorizedException e) {
-            e.printStackTrace();
             response.setError(true);
             response.setMessage("Incorrect old password");
         } catch(LimitExceededException e) {
-            e.printStackTrace();
             response.setError(true);
             response.setMessage("Exceeds the limit for changing password");
         }

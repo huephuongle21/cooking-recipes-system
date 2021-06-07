@@ -3,7 +3,7 @@ package com.rmit.cloudcomputing.service;
 import com.amazonaws.services.dynamodbv2.document.*;
 import com.amazonaws.services.dynamodbv2.document.spec.ScanSpec;
 import com.amazonaws.services.dynamodbv2.model.ResourceNotFoundException;
-import com.rmit.cloudcomputing.dto.request.SubscribedRecipeRequest;
+import com.rmit.cloudcomputing.dto.request.AddFavouriteListRequest;
 import com.rmit.cloudcomputing.dto.response.RecipeResponse;
 import com.rmit.cloudcomputing.dto.response.Response;
 import com.rmit.cloudcomputing.dto.response.UserRecipesResponse;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
-public class SubscribedRecipeService {
+public class FavouriteListService {
 
     @Autowired
     private DynamoDB dynamoDB;
@@ -21,30 +21,32 @@ public class SubscribedRecipeService {
     @Autowired
     private RecipeService recipeService;
 
-    public Response subscribeRecipe(SubscribedRecipeRequest request) {
+    private static String tableName = "favourite_list";
 
-        Table table = dynamoDB.getTable("subscribed_recipe");
+    public Response addFavouriteList(AddFavouriteListRequest request) {
+
+        Table table = dynamoDB.getTable(tableName);
         Response response = new Response();
         String id = UUID.randomUUID().toString();
-        Item newSubscribedRecipe = new Item()
+        Item favouriteRecipe = new Item()
                 .withPrimaryKey("id", id)
                 .withString("userEmail", request.getEmail())
                 .withString("recipeId", request.getRecipeId());
         try {
-            table.putItem(newSubscribedRecipe);
+            table.putItem(favouriteRecipe);
             response.setError(false);
-            response.setMessage("Recipe subscribed");
+            response.setMessage("Recipe added to favourite list");
         } catch (Exception e) {
             response.setError(true);
-            response.setMessage("Cannot subscribe recipe");
+            response.setMessage("Cannot add recipe to favourite list");
         }
         return response;
     }
 
-    public UserRecipesResponse getUserSubscribedRecipes(String email) {
+    public UserRecipesResponse getFavouriteList(String email) {
         UserRecipesResponse response = new UserRecipesResponse(true, "No recipes found");
         try {
-            Table table = dynamoDB.getTable("subscribed_recipe");
+            Table table = dynamoDB.getTable(tableName);
             HashMap<String, String> nameMap = new HashMap<>();
             HashMap<String, Object> valueMap = new HashMap<>();
 

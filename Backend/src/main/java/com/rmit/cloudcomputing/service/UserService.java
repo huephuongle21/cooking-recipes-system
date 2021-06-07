@@ -14,8 +14,10 @@ public class UserService {
     @Autowired
     private DynamoDB dynamoDB;
 
+    private static String tableName = "user";
+
     public void addUser(RegisterRequest registerRequest) {
-        Table table = dynamoDB.getTable("user");
+        Table table = dynamoDB.getTable(tableName);
 
         String email = registerRequest.getEmail();
         String username = registerRequest.getUsername();
@@ -30,7 +32,7 @@ public class UserService {
 
     public UserDetailsResponse getUserDetails(String email) {
         UserDetailsResponse response = new UserDetailsResponse(true, "Cannot get user details");
-        Table table = dynamoDB.getTable("user");
+        Table table = dynamoDB.getTable(tableName);
         Item user = table.getItem("email", email);
         if(user != null) {
             response.setUsername(user.getString("username"));

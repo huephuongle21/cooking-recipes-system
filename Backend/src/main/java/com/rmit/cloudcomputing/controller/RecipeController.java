@@ -15,17 +15,17 @@ public class RecipeController {
     @Autowired
     private RecipeService recipeService;
 
-    @RequestMapping(value = "/addRecipe", method = RequestMethod.POST)
+    @PostMapping("/add-recipe")
     public Response addRecipe(@ModelAttribute AddRecipeRequest recipe) {
         return recipeService.addRecipe(recipe);
     }
 
-    @GetMapping("/userRecipes/{email}")
+    @GetMapping("/user-recipes/{email}")
     public UserRecipesResponse getUserRecipes(@PathVariable("email") String email) {
         return recipeService.getUserRecipes(email);
     }
 
-    @GetMapping("/queryRecipe/{title}")
+    @GetMapping("/query-recipe/{title}")
     public UserRecipesResponse getRecipesByTitle(@PathVariable("title") String title) {
         return recipeService.queryRecipes(title);
     }

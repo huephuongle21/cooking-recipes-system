@@ -37,14 +37,13 @@ public class UserController {
             provider.signUp(request);
             userService.addUser(registerRequest);
         } catch(UsernameExistsException e) {
-            e.printStackTrace();
             response.setError(true);
             response.setMessage("Email already exists");
         }
         return response;
     }
 
-    @GetMapping("/userDetails/{email}")
+    @GetMapping("/user-details/{email}")
     public UserDetailsResponse getUserDetails(@PathVariable("email") String email) {
         return userService.getUserDetails(email);
     }
