@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
+@import  './colors.scss', './bootstrap.scss';
+
+
+html, body{
+    font-size: 15px;
+}
+*{
+    box-sizing: border-box;
+}
+body{
+    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+    color: $black;
+    background: rgba($color: $grey, $alpha: 0.05);
+}
+a{
+    color: $primary;
+    &:not(:hover){
+        text-decoration: none;
+    }
+}
+.danger-text{
+    color: $danger;
+}
+.btn{
+    padding: 0.8rem;
+    font-family: inherit;
+    text-transform: uppercase;
+    font-size: 1rem;
+    line-height: 1em;
+    outline: none;
+    border: 0.1rem solid $primary;
+    border-radius: 0.2rem;
+    padding: 0.8rem;
+    background: $primary;
+    text-transform: uppercase;
+    color: #fff;
+    position: relative;
+    cursor: pointer;
+    min-width: 6.2rem;
+    &::before{
+        content: '';
+        position: absolute;
+        left: -0.1rem;
+        top: -0.1rem;
+        bottom: -0.1rem;
+        right: -0.1rem;
+        border-radius: inherit;
+        transition: linear 0.1s all;
+    }
+    &.btn-danger{
+        background: $danger;
+        border-color: $danger;
+    }
+    &:hover::before{
+        background: rgba($color: $black, $alpha: 0.1);
+    }
+    &:active::before{
+        background: rgba($color: $black, $alpha: 0.2);
+    }
+    &[loader="loader"]{
+        padding-right: calc(1em + 2rem);
+        &::after{
+            border-color: #fff;
+            position: absolute;
+            right: 0.8rem;
+            top: 0.6rem;
+        }
+    }
+    &:disabled{
+        opacity: 0.8;
+        cursor: not-allowed;
+    }
+}
+.loader{
+    border-color: #fff;
+}
+.btn[loader="loader"]::after, .loader{
+    content: '';
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    border: 0.2em solid;
+    animation: 0.3s infinite Loader linear;
+    border-right-color: transparent !important;
+    border-top-color: transparent !important;
+}
+.container{
+    max-width: 1500px;
+    width: 87%;
+    margin: auto;
+}
+.card{
+    padding: 1rem;
+    background: #fff;
+    box-shadow: 0 1px 2.5px 0 rgba(0, 0, 0, 0.08), 0 1px 5px 0 rgba(0, 0, 0, 0.06);
+    border-radius: 0.2rem;
+}
+.table-wrapper{
+    display: grid;
+    grid-template-columns: 1fr;
+    .table-container{
+        border-radius: 0.2rem;
+        overflow: auto;
+    }
+    table{
+        text-align: left;
+        border-collapse: collapse;
+        width: 100%;
+    }
+    th, td{
+        padding: 0.8rem;
+    }
+    thead{
+        background: $primary;
+        color: #fff;
+        white-space: nowrap;
+    }
+    tr:nth-child(even){
+        background: rgba($color: $primary, $alpha: 0.2);
+    }
+}
+@media (max-width: 767px) {
+    .container{
+        width: calc(100% - 2rem);
+    }
+}
+@keyframes Loader {
+    0%{
+        transform: rotate(0);
+    }
+    100%{
+        transform: rotate(360deg);
+    }
+}

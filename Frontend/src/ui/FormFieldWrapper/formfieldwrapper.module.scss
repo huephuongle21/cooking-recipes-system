@@ -1,0 +1,41 @@
+@import '../../scss/colors.scss';
+
+.root{
+    .label{
+        left: 0.8rem;
+        color: $grey;
+        top: 1rem;
+        padding: 0 0.1rem;
+        background: #fff;
+        transition: linear 0.1s all;
+        line-height: 1em;
+    }
+    input, select, textarea{
+        resize: none;
+        font-size: 1rem;
+        outline: none;
+        border: 0.1rem solid $grey;
+        border-radius: 0.2rem;
+        padding: 0.8rem;
+        background: #fff;
+        color: $black;
+        width: 100%;
+        &::placeholder{
+            color: $grey;
+            font-weight: 400;
+            font-family: inherit;
+        }
+        &:focus, &:not(:placeholder-shown){
+            ~ .label{
+                top: -0.3rem;
+                font-size: 0.7rem;
+            }
+        }
+        &:focus{
+            border-color: $primary;
+            ~ .label{
+                color: $primary;
+            }
+        }
+    }
+}

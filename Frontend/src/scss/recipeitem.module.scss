@@ -1,0 +1,31 @@
+@import './colors.scss';
+.description{
+    grid-column: 1 / -1;
+}
+.image{
+    width: 10rem;
+    height: 6rem;
+    border-radius: 0.2rem;
+}
+.titleWrapper{
+    line-height: 1em;
+}
+.subscribe_btn{
+    background: transparent;
+    border: none;
+    outline: none;
+    height: 2rem;
+    width: 2rem;
+    border-radius: 50%;
+    cursor: pointer;
+    &:hover{
+        background: rgba($color: $grey, $alpha: 0.1);
+    }
+    &:active{
+        background: rgba($color: $grey, $alpha: 0.2);
+    }
+    svg{
+        width: 1rem;
+        color: red;
+    }
+}

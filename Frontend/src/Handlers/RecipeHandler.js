@@ -16,7 +16,7 @@ class RecipeHandler {
                 'Access-Control-Allow-Origin' : '*',
                 'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
             }
-        })
+        });
     }
 
     getRecipesByTitle(title) {
@@ -25,7 +25,7 @@ class RecipeHandler {
                 'Access-Control-Allow-Origin' : '*',
                 'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
             }
-        })
+        });
     }
 
     getAllRecipes() {
@@ -34,7 +34,7 @@ class RecipeHandler {
                 'Access-Control-Allow-Origin' : '*',
                 'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
             }
-        })
+        });
     }
 }
 

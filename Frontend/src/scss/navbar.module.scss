@@ -1,0 +1,79 @@
+@import '../scss/colors.scss';
+
+.root{
+    background: rgb(255, 245, 232);
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    position: sticky;
+    top: 0;
+    margin-bottom: 1rem;
+    z-index: 20;
+}
+.logo{
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 0.5rem 0;
+    img, svg{
+        max-height: 3rem;
+        display: block;
+    }
+}
+.menubtn{
+    padding: 0.4rem 0.45rem 0.25rem 0.45rem;
+    border: none;
+    outline: none;
+    background: transparent;
+    cursor: pointer;
+    line-height: 1em;
+    margin-right: -0.45rem;
+    &:hover{
+        background: rgba($color: $black, $alpha: 0.2);
+    }
+    &:active{
+        background: rgba($color: $black, $alpha: 0.2);
+    }
+    svg{
+        width: 1rem;
+    }
+}
+.linksWrapper{
+    a{
+        display: block;
+        padding: 0.8rem;
+        color: inherit;
+        line-height: 1em;
+        border-radius: 0.2rem;
+        &:hover{
+            background: rgba($color: $black, $alpha: 0.1);
+            text-decoration: none;
+        }
+        &:active{
+            background: rgba($color: $black, $alpha: 0.2);
+        }
+    }
+    @media (max-width: 991px) {
+        position: fixed;
+        background: #fff;
+        left: -250px;
+        top: 0;
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+        height: 100%;
+        width: 250px;
+        transition: 0.2s all;
+        z-index: 1;
+        &.open{
+            left: 0;
+        }
+        a{
+            padding: 1rem;
+        }
+    }
+}
+
+.blur{
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba($color: $black, $alpha: 0.8);
+}

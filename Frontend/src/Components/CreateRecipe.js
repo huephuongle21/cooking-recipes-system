@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Form from 'react-bootstrap/Form';
 import RecipeHandler from '../Handlers/RecipeHandler';
 import Navbar from './Navbar';
+import InputField from '../ui/InputField/InputField';
+import TextArea from '../ui/TextArea';
 
 class CreateRecipe extends Component {
     constructor() {
@@ -10,7 +12,8 @@ class CreateRecipe extends Component {
             title: "",
             description: "",
             file: "",
-            errorMessage: ""
+            errorMessage: "",
+            isLoading: false,
         };
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
@@ -18,7 +21,7 @@ class CreateRecipe extends Component {
     }
 
     onChange(e) {
-        this.setState({[e.target.name]: e.target.value});
+        this.setState({ [e.target.name]: e.target.value });
     }
 
     onFileChange(e) {
@@ -31,6 +34,7 @@ class CreateRecipe extends Component {
 
     onSubmit(e) {
         e.preventDefault();
+        this.setState({ isLoading: true });
         const recipe = this.state.file;
         recipe.append("title", this.state.title);
         recipe.append("description", this.state.description);
@@ -38,12 +42,13 @@ class CreateRecipe extends Component {
 
         RecipeHandler.addRecipe(recipe).then((res) => {
             const data = res.data;
-            if(data.error) {
+            if (data.error) {
                 this.setState({
                     title: "",
                     description: "",
                     file: "",
-                    errorMessage: data.message
+                    errorMessage: data.message,
+                    isLoading: false,
                 });
             } else {
                 alert(data.message);
@@ -51,35 +56,31 @@ class CreateRecipe extends Component {
             }
         });
     }
-    
+
     render() {
-        return(
+        return (
             <React.Fragment>
-                <Navbar/>
+                <Navbar />
                 <div className="container">
-                    <h1>Create new recipe</h1>
-                    <Form onSubmit={this.onSubmit} enctype='multipart/form-data'> 
-                        <div className="form-group">
-                            <label className="name">Title</label>
-                            <input className="input" type="text" placeholder="Title" name="title" 
-                                value={this.state.title} onChange={this.onChange} required/>
-                        </div>
+                    <h1 className='my-5'>Create new recipe</h1>
+                    <Form onSubmit={this.onSubmit} encType='multipart/form-data' className='d-grid gap-3'>
+                        <InputField type="text"
+                            title="Title"
+                            name="title"
+                            value={this.state.title}
+                            onChange={this.onChange}
+                            required
+                        />
+                        <TextArea rows={4} title="Description" name="description"
+                            value={this.state.description} onChange={this.onChange} required />
 
-                        <div className="form-group">
-                            <label className="name">Description</label>
-                            <input className="input" type="text" placeholder="Description" name="description" 
-                                value={this.state.description} onChange={this.onChange} required/>
-                        </div>
+                        <InputField title='Recipe Image' type="file" onChange={this.onFileChange} name="file" accept="image/jpeg" required />
 
-                        <div className="form-group">
-                            <label className="name">Recipe image</label>
-                            <input className="input" type="file" onChange={this.onFileChange} name="file" accept="image/jpeg" required/>
-                        </div>
-                        { 
+                        {
                             this.state.errorMessage &&
-                            <h6 className="alert alert-danger"> {this.state.errorMessage} </h6> 
+                            <p className="m-0 danger-text"> {this.state.errorMessage} </p>
                         }
-                        <button type="submit" className="btn-lg btn-dark btn-block">Submit</button>
+                        <button disabled={this.state.isLoading} type="submit" loader={this.state.isLoading ? "loader" : ""} className="btn ms-auto">Submit</button>
                     </Form>
                 </div>
             </React.Fragment>
