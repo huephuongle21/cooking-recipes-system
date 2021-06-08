@@ -75,15 +75,15 @@ class Register extends Component {
                                     title='Username'
                                 />
                                 <InputField
-                                    type="text"
+                                    type="tel"
                                     title="Phone number"
                                     name="phoneNumber"
                                     value={this.state.phoneNumber}
                                     onChange={this.onChange}
+                                    pattern="^\+?\d*$"
+                                    minLength={12} maxLength={12}
                                     required
                                 />
-
-
                                 <InputField
                                     type="password"
                                     placeholder="Password"

@@ -47,7 +47,6 @@ class ChangePassword extends Component {
                     window.location.reload();
                 }
             })
-            .catch(err => this.setState({ errorMessage: err.response.data.error, isLoading: false }))
     }
 
     cancel() {
@@ -80,6 +79,7 @@ class ChangePassword extends Component {
                             name="oldPassword"
                             value={this.state.oldPassword}
                             onChange={this.onChange}
+                            minLength={6}
                             required
                         />
                         <InputField
@@ -89,9 +89,8 @@ class ChangePassword extends Component {
                             value={this.state.newPassword}
                             onChange={this.onChange}
                             required
-                            minLength={8}
+                            minLength={6}
                         />
-
 
                         {
                             this.state.errorMessage &&

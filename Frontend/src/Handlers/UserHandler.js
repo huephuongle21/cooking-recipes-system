@@ -12,7 +12,7 @@ class UserHandler {
     }
 
     getUserDetails(email) {
-        return axios.get("http://localhost:8080/api/user/userDetails/" + email, {
+        return axios.get("http://localhost:8080/api/user/user-details/" + email, {
             headers: {
                 'Access-Control-Allow-Origin' : '*',
                 'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',

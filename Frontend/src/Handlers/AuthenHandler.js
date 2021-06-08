@@ -20,15 +20,13 @@ class AuthenHandler {
     }
 
     changePwdHandler(changePwdRequest) {
-        return axios.put("http://localhost:8080/api/authen/changePassword", changePwdRequest, {
+        return axios.put("http://localhost:8080/api/authen/change-password", changePwdRequest, {
             headers: {
             'Access-Control-Allow-Origin' : '*',
             'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
             }
         });
     }
-
-    
 }
 
 export default new AuthenHandler();

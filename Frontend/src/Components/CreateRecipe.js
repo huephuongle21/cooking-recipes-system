@@ -74,7 +74,7 @@ class CreateRecipe extends Component {
                         <TextArea rows={4} title="Description" name="description"
                             value={this.state.description} onChange={this.onChange} required />
 
-                        <InputField title='Recipe Image' type="file" onChange={this.onFileChange} name="file" accept="image/jpeg" required />
+                        <InputField title='Recipe Image' type="file" onChange={this.onFileChange} name="file" required />
 
                         {
                             this.state.errorMessage &&
