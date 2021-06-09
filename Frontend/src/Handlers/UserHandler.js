@@ -3,21 +3,11 @@ import axios from "axios";
 class UserHandler {
 
     registerHandler(newUser) {
-        return axios.post("http://localhost:8080/api/user/register", newUser, {
-            headers: {
-            'Access-Control-Allow-Origin' : '*',
-            'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-            }
-        });
+        return axios.post("https://l6cjufwsoj.execute-api.us-east-1.amazonaws.com/stage-1/api/user/register", newUser);
     }
 
     getUserDetails(email) {
-        return axios.get("http://localhost:8080/api/user/user-details/" + email, {
-            headers: {
-                'Access-Control-Allow-Origin' : '*',
-                'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-            }
-        });
+        return axios.get("https://l6cjufwsoj.execute-api.us-east-1.amazonaws.com/stage-1/api/user/user-details/" + email);
     }
 }
 

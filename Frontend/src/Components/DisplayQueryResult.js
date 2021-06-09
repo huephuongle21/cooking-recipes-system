@@ -24,7 +24,7 @@ class DisplayQueryResult extends Component {
                         errorMessage: data.message
                     })
                 } else {
-                    alert("Subscribe recipe successfully");
+                    alert(data.message);
                     window.location.reload();
                 }
             })

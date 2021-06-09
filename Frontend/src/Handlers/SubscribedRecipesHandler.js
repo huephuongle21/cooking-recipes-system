@@ -2,21 +2,11 @@ import axios from "axios";
 
 class SubscribedRecipesHandler {
     subscribeRecipe(request) {
-        return axios.post("http://localhost:8080/api/favourite-list/add-favourite-list", request, {
-            headers: {
-            'Access-Control-Allow-Origin' : '*',
-            'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-            }
-        });
+        return axios.post("https://l6cjufwsoj.execute-api.us-east-1.amazonaws.com/stage-1/api/favourite-list/add-favourite-list", request);
     }
 
     getUserSubscribedRecipes(email) {
-        return axios.get("http://localhost:8080/api/favourite-list/get-favourite-list/" + email, {
-            headers: {
-                'Access-Control-Allow-Origin' : '*',
-                'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-            }
-        });
+        return axios.get("https://l6cjufwsoj.execute-api.us-east-1.amazonaws.com/stage-1/api/favourite-list/get-favourite-list/" + email);
     }
 }
 

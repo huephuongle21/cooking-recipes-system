@@ -43,7 +43,7 @@ class ChangePassword extends Component {
                         isLoading: false,
                     })
                 } else {
-                    alert("Password changed");
+                    alert(data.message);
                     window.location.reload();
                 }
             })
