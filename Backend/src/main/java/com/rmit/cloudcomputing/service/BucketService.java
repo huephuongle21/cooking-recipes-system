@@ -2,7 +2,10 @@ package com.rmit.cloudcomputing.service;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
+import com.amazonaws.services.s3.transfer.TransferManager;
+import com.amazonaws.services.s3.transfer.TransferManagerBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.apache.commons.io.FilenameUtils;
@@ -19,6 +22,9 @@ public class BucketService {
     private AmazonS3 s3Client;
 
     private static String bucketName = "cookingsystem-recipe-images";
+
+    @Value("${dynamodb.path}")
+    private String filePath;
 
     public String isFileValid(MultipartFile file) {
         String fileType = file.getContentType();
@@ -38,7 +44,7 @@ public class BucketService {
     }
 
     private File convertMultiPartToFile(MultipartFile file) throws IOException {
-        File convFile = new File(file.getOriginalFilename());
+        File convFile = new File(filePath + file.getOriginalFilename());
         FileOutputStream fos = new FileOutputStream(convFile);
         fos.write(file.getBytes());
         fos.close();
@@ -53,6 +59,7 @@ public class BucketService {
                     .withCannedAcl(CannedAccessControlList.PublicRead));
             file.delete();
         } catch (Exception e) {
+            e.printStackTrace();
             uploaded = false;
         }
         return uploaded;
